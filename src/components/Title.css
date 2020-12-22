@@ -1,0 +1,22 @@
+.Title {
+  display: flex;
+  height: 4rem;
+  justify-content: center;
+  align-items: center;
+  max-width: 15rem;
+  margin: auto;
+}
+
+.Title .logo {
+  margin-right: 0.3rem;
+}
+
+.Title .heading {
+  color: #5aa2ea;
+  font-size: 1.9rem;
+}
+
+.Title img {
+  height: 50px;
+  width: 55px;
+}
