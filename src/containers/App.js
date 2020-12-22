@@ -72,8 +72,13 @@ export default function App() {
     let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=2542c4373dc0e41843d76539625f930b`;
     try {
       const response = await fetch(url, { mode: "cors" });
-      const data = await response.json();
-      return filterData(data);
+      console.log(response);
+      if (response.ok) {
+        const data = await response.json();
+        return filterData(data);
+      } else if (response.status === 404) {
+        console.error("No data found", response.status);
+      }
     } catch (err) {
       console.error(err);
       // execute fallback function or handle error
@@ -96,7 +101,7 @@ export default function App() {
 
   // set default weather when component mounts
   useEffect(() => {
-    getWeatherByCity("delhi").then((data) => {
+    getWeatherByCity("delhiii").then((data) => {
       setWeather(data);
       setCountry(data.country);
     });
