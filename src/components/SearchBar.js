@@ -2,11 +2,11 @@ import React from "react";
 import "./SearchBar.css";
 
 export default function SearchBar(props) {
-  const { handleInput, handleSearch, inputVal } = props;
+  const { handleInput, handleSearch, inputVal, geoLoc } = props;
   return (
     <section className="Search">
       <div className="searchBox">
-        <button className="location" type="button">
+        <button onClick={geoLoc} className="location" type="button">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"

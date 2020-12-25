@@ -63,35 +63,82 @@ const filterData = (data) => {
 };
 
 export default function App() {
-  //state
+  // ***** State ***** //
+
   const [weather, setWeather] = useState(); // main weather object
   const [country, setCountry] = useState(""); // country code
   const [input, setInput] = useState(""); // search value
+  const [errorCode, setErrorCode] = useState(null); // holds error code
+  const [errorText];
+
+  // ***** Functions ***** //
+
   // fetch by city
   const getWeatherByCity = async (city) => {
     let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=2542c4373dc0e41843d76539625f930b`;
-    try {
-      const response = await fetch(url, { mode: "cors" });
-      console.log(response);
-      if (response.ok) {
-        const data = await response.json();
-        return filterData(data);
-      } else if (response.status === 404) {
-        console.error("No data found", response.status);
-      }
-    } catch (err) {
-      console.error(err);
-      // execute fallback function or handle error
+
+    const response = await fetch(url, { mode: "cors" }); // make request
+    // if ok is false throw the response itself and reject the promise
+    if (!response.ok) {
+      throw response;
     }
+    const data = await response.json();
+    return filterData(data);
+  };
+
+  // fetch by geolocation
+  const getWeatherByGeoLoc = () => {
+    if ("geolocation" in navigator) {
+      // first set errorCode to null and error text to ''
+      navigator.geolocation.getCurrentPosition((position) => {
+        console.log(
+          `latitude is ${position.coords.latitude} and longitude is ${position.coords.longitude}`
+        );
+      });
+    }
+  };
+
+  const manageState = (data) => {
+    setWeather(data);
+    setCountry(data.country);
+  };
+
+  const handleError = (response) => {
+    setErrorCode(response.status);
+    console.error(`Server responded with status text ${response.statusText}`);
   };
 
   const handleInput = (e) => {
     setInput(e.target.value);
   };
 
+  const validateSearch = (input) => {
+    if (input) return true;
+    return false;
+  };
+
   const handleSearch = (e) => {
     e.preventDefault();
-    // handle further search and fetching
+    // check if input value is empty, if it's then ask to input city name
+    if (!validateSearch(input)) {
+      console.log(`Please enter a city.`);
+      return;
+    }
+
+    // set the error code to null
+    setErrorCode(null);
+    // set errorText to ''
+
+    // make the fetch request
+    getWeatherByCity(input)
+      .then((data) => {
+        // pass the data to manage state
+        manageState(data);
+      })
+      // .catch error if any and pass the response to error handler
+      .catch((response) => {
+        handleError(response);
+      });
   };
 
   // Efects
@@ -99,17 +146,25 @@ export default function App() {
   //   getWeatherByCity("talajaaa").then(console.log);
   // });
 
+  // ***** Side Effects ***** //
+
   // set default weather when component mounts
   useEffect(() => {
-    getWeatherByCity("delhiii").then((data) => {
-      setWeather(data);
-      setCountry(data.country);
-    });
+    getWeatherByCity("delhi")
+      .then((data) => {
+        manageState(data);
+      })
+      // catch the thrown response and execute error handling function
+      .catch((response) => {
+        handleError(response);
+      });
   }, []);
+
   return (
     <div className="App">
       <Title />
       <SearchBar
+        geoLoc={getWeatherByGeoLoc}
         inputVal={input}
         handleInput={handleInput}
         handleSearch={handleSearch}
