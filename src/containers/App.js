@@ -68,34 +68,16 @@ export default function App() {
   const [weather, setWeather] = useState(); // main weather object
   const [country, setCountry] = useState(""); // country code
   const [input, setInput] = useState(""); // search value
-  const [errorCode, setErrorCode] = useState(null); // holds error code
-  const [errorText];
+  // const [errorCode, setErrorCode] = useState(null); // holds error code
+  // const [errorText];
+  const [error, setError] = useState({ code: null, text: "" }); // holds error
 
   // ***** Functions ***** //
 
-  // fetch by city
-  const getWeatherByCity = async (city) => {
-    let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=2542c4373dc0e41843d76539625f930b`;
-
-    const response = await fetch(url, { mode: "cors" }); // make request
-    // if ok is false throw the response itself and reject the promise
-    if (!response.ok) {
-      throw response;
-    }
-    const data = await response.json();
-    return filterData(data);
-  };
-
-  // fetch by geolocation
-  const getWeatherByGeoLoc = () => {
-    if ("geolocation" in navigator) {
-      // first set errorCode to null and error text to ''
-      navigator.geolocation.getCurrentPosition((position) => {
-        console.log(
-          `latitude is ${position.coords.latitude} and longitude is ${position.coords.longitude}`
-        );
-      });
-    }
+  const handleError = (response) => {
+    // setErrorCode(response.status);
+    setError({ code: response.status, text: "" });
+    console.error(`Server responded with status text ${response.statusText}`);
   };
 
   const manageState = (data) => {
@@ -103,9 +85,67 @@ export default function App() {
     setCountry(data.country);
   };
 
-  const handleError = (response) => {
-    setErrorCode(response.status);
-    console.error(`Server responded with status text ${response.statusText}`);
+  // fetch by city
+  const getWeatherByCity = async (city) => {
+    let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=2542c4373dc0e41843d76539625f930b`;
+
+    const response = await fetch(url, { mode: "cors" }); // make request
+
+    // if ok is false throw the response itself and reject the promise
+    if (!response.ok) {
+      throw response;
+    }
+
+    const data = await response.json();
+    return filterData(data);
+  };
+
+  // fetch by location
+  const getWeatherByGeoLoc = async (latitude, longitude) => {
+    const url = `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=2542c4373dc0e41843d76539625f930b
+    `;
+
+    const response = await fetch(url, { mode: "cors" }); // make request
+
+    // if ok is false throw the response itself and reject the promise
+    if (!response.ok) {
+      throw response;
+    }
+
+    const data = await response.json();
+    return filterData(data);
+  };
+
+  // callded for success
+  const geoLocSuccess = (position) => {
+    console.log(
+      `latitude is ${position.coords.latitude} and longitude is ${position.coords.longitude}`
+    );
+
+    // set the error code to null
+    setError({ code: null, text: "" });
+
+    getWeatherByGeoLoc(position.coords.latitude, position.coords.longitude)
+      .then((data) => {
+        // pass the data to manage state
+        manageState(data);
+      })
+      // .catch error if any and pass the response to error handler
+      .catch((response) => {
+        handleError(response);
+      });
+  };
+
+  // called for error
+  const geoLocError = () =>
+    setError({ code: null, text: "Unable to retrieve your location." });
+
+  // fetch by geolocation
+  const getGeoLoc = () => {
+    if ("geolocation" in navigator) {
+      setError({ code: null, text: "" });
+      navigator.geolocation.getCurrentPosition(geoLocSuccess, geoLocError);
+    }
   };
 
   const handleInput = (e) => {
@@ -126,8 +166,8 @@ export default function App() {
     }
 
     // set the error code to null
-    setErrorCode(null);
-    // set errorText to ''
+    // setErrorCode(null);
+    setError({ code: null, text: "" });
 
     // make the fetch request
     getWeatherByCity(input)
@@ -164,7 +204,7 @@ export default function App() {
     <div className="App">
       <Title />
       <SearchBar
-        geoLoc={getWeatherByGeoLoc}
+        geoLoc={getGeoLoc}
         inputVal={input}
         handleInput={handleInput}
         handleSearch={handleSearch}
