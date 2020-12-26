@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import SearchBar from "../components/SearchBar";
 import Title from "../components/Title";
 import "./App.css";
+import WeatherContainer from "./WeatherContainer";
 
 // celsius to fahrenheit converter
 const getFahrenheit = (celsius) => {
@@ -66,8 +67,12 @@ export default function App() {
   // ***** State ***** //
 
   const [weather, setWeather] = useState(); // main weather object
+  // set it true when weather container mounts
+  const [showWeather, setShowWeather] = useState(false);
   const [country, setCountry] = useState(""); // country code
   const [input, setInput] = useState(""); // search value
+  // if true, show temp in celisius, fahrenheit otherwise
+  const [showCelsius, setShowCelsius] = useState(true);
   // const [errorCode, setErrorCode] = useState(null); // holds error code
   // const [errorText];
   const [error, setError] = useState({ code: null, text: "" }); // holds error
@@ -82,7 +87,7 @@ export default function App() {
 
   const manageState = (data) => {
     setWeather(data);
-    setCountry(data.country);
+    // setCountry(data.country);
   };
 
   // fetch by city
@@ -181,10 +186,10 @@ export default function App() {
       });
   };
 
-  // Efects
-  // useEffect(() => {
-  //   getWeatherByCity("talajaaa").then(console.log);
-  // });
+  const handleUnitChange = (e) => {
+    console.log(`check box status: ${e.target.checked}`);
+    setShowCelsius((prevState) => (prevState ? false : true));
+  };
 
   // ***** Side Effects ***** //
 
@@ -193,6 +198,7 @@ export default function App() {
     getWeatherByCity("delhi")
       .then((data) => {
         manageState(data);
+        setShowWeather(true);
       })
       // catch the thrown response and execute error handling function
       .catch((response) => {
@@ -209,6 +215,13 @@ export default function App() {
         handleInput={handleInput}
         handleSearch={handleSearch}
       />
+      {showWeather ? (
+        <WeatherContainer
+          country={weather.country}
+          city={weather.city}
+          handleUnitChange={handleUnitChange}
+        />
+      ) : null}
     </div>
   );
 }

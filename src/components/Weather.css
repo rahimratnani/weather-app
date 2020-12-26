@@ -1,0 +1,80 @@
+.Weather {
+  max-width: 80%;
+  margin: 0.5rem auto auto auto;
+  background: linear-gradient(
+    180deg,
+    hsla(207, 97%, 66%, 0.8) 0%,
+    hsla(212, 97%, 62%, 1) 87%
+  );
+  border-radius: 20px;
+  padding-bottom: 1rem;
+}
+
+.Weather .weatherMain {
+  /* border: 1px solid black; */
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  /* padding: 0; */
+}
+
+.Weather .condition {
+  /* color: #5aa2ea; */
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin: 0 0 0.5rem 0;
+  letter-spacing: 1px;
+}
+
+.Weather .day,
+.date {
+  margin: 0;
+  /* color: #5aa2ea; */
+  color: #fff;
+  font-weight: 500;
+}
+
+.Weather .weatherImg {
+  height: 100px;
+  width: 100px;
+}
+
+.Weather .temp {
+  text-align: center;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.Weather .temp p {
+  font-size: 3rem;
+  font-weight: 500;
+  color: #fff;
+  margin: 0;
+}
+
+.Weather .temp .degree {
+  font-size: 2.5rem;
+  font-weight: normal;
+}
+
+.Weather .description {
+  color: #fff;
+  text-align: center;
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+.Weather .description p {
+  margin: 0;
+}
+
+.Weather .description p:nth-child(1) {
+  margin-bottom: 0.7rem;
+}
+
+.Weather .description .divider {
+  font-weight: bolder;
+  padding: 0 0.5rem 0 0.5rem;
+  font-size: 1.5rem;
+}
