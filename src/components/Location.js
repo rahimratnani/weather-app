@@ -10,9 +10,9 @@ export default function Location(props) {
           {city}, {country}
         </p>
       </div>
-      <div>
+      <div className="flag">
         <img
-          src={`https://www.countryflags.io/${country}/flat/64.png`}
+          src={`https://www.countryflags.io/${country}/flat/48.png`}
           alt="flag"
         />
       </div>

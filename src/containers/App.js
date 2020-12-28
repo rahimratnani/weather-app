@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Error from "../components/Error";
 import SearchBar from "../components/SearchBar";
 import Title from "../components/Title";
 import "./App.css";
@@ -7,8 +8,10 @@ import WeatherContainer from "./WeatherContainer";
 // celsius to fahrenheit converter
 const getFahrenheit = (celsius) => {
   let f = celsius * (9 / 5) + 32;
-  return Math.round(f * 10) / 10;
+  return Math.round(f);
 };
+
+const roundNumber = (num) => Math.round(Number(num));
 
 // date conversion
 const getDate = (unix_timestamp) => {
@@ -49,9 +52,9 @@ const filterData = (data) => {
   return {
     description: data.weather[0].main,
     icon: data.weather[0].icon,
-    tempC: data.main.temp,
+    tempC: roundNumber(data.main.temp),
     tempF: getFahrenheit(data.main.temp),
-    feelsLikeC: data.main.feels_like,
+    feelsLikeC: roundNumber(data.main.feels_like),
     feelsLikeF: getFahrenheit(data.main.feels_like),
     humidity: data.main.humidity,
     clouds: data.clouds.all,
@@ -69,17 +72,16 @@ export default function App() {
   const [weather, setWeather] = useState(); // main weather object
   // set it true when weather container mounts
   const [showWeather, setShowWeather] = useState(false);
-  const [country, setCountry] = useState(""); // country code
   const [input, setInput] = useState(""); // search value
   // if true, show temp in celisius, fahrenheit otherwise
   const [showCelsius, setShowCelsius] = useState(true);
-  // const [errorCode, setErrorCode] = useState(null); // holds error code
-  // const [errorText];
   const [error, setError] = useState({ code: null, text: "" }); // holds error
 
   // ***** Functions ***** //
 
   const handleError = (response) => {
+    // set show weather to false first
+    setShowWeather(false);
     // setErrorCode(response.status);
     setError({ code: response.status, text: "" });
     console.error(`Server responded with status text ${response.statusText}`);
@@ -87,7 +89,6 @@ export default function App() {
 
   const manageState = (data) => {
     setWeather(data);
-    // setCountry(data.country);
   };
 
   // fetch by city
@@ -134,6 +135,9 @@ export default function App() {
       .then((data) => {
         // pass the data to manage state
         manageState(data);
+
+        // set the show weather to true if it's false
+        if (!showWeather) setShowWeather(true);
       })
       // .catch error if any and pass the response to error handler
       .catch((response) => {
@@ -142,8 +146,11 @@ export default function App() {
   };
 
   // called for error
-  const geoLocError = () =>
+  const geoLocError = () => {
+    // set show weather to false
+    setShowWeather(false);
     setError({ code: null, text: "Unable to retrieve your location." });
+  };
 
   // fetch by geolocation
   const getGeoLoc = () => {
@@ -167,11 +174,14 @@ export default function App() {
     // check if input value is empty, if it's then ask to input city name
     if (!validateSearch(input)) {
       console.log(`Please enter a city.`);
+      // set show weather to false
+      setShowWeather(false);
+      // set error text to 'Please enter a city name.' and code to null
+      setError({ code: null, text: "Please Enter A City Name" });
       return;
     }
 
     // set the error code to null
-    // setErrorCode(null);
     setError({ code: null, text: "" });
 
     // make the fetch request
@@ -179,6 +189,9 @@ export default function App() {
       .then((data) => {
         // pass the data to manage state
         manageState(data);
+
+        // if show weather is false, set it true
+        if (!showWeather) setShowWeather(true);
       })
       // .catch error if any and pass the response to error handler
       .catch((response) => {
@@ -215,13 +228,15 @@ export default function App() {
         handleInput={handleInput}
         handleSearch={handleSearch}
       />
+
       {showWeather ? (
         <WeatherContainer
-          country={weather.country}
-          city={weather.city}
           handleUnitChange={handleUnitChange}
+          weather={weather}
+          showCelsius={showCelsius}
         />
       ) : null}
+      {error.code || error.text ? <Error error={error} /> : null}
     </div>
   );
 }

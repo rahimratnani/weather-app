@@ -4,12 +4,12 @@ import Switch from "../components/Switch";
 import Weather from "../components/Weather";
 
 export default function WeatherContainer(props) {
-  const { country, city, handleUnitChange } = props;
+  const { handleUnitChange, weather, showCelsius } = props;
   return (
     <React.Fragment>
-      <Location country={country} city={city} />
       <Switch handleUnitChange={handleUnitChange} />
-      <Weather />
+      <Location country={weather.country} city={weather.city} />
+      <Weather weather={weather} showCelsius={showCelsius} />
     </React.Fragment>
   );
 }

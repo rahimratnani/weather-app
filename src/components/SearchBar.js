@@ -14,7 +14,6 @@ export default function SearchBar(props) {
             viewBox="0 0 24 24"
             fill="none"
             stroke="#FFFFFF"
-            // stroke="#97C5F3"
             strokeWidth="3"
             strokeLinecap="round"
             strokeLinejoin="round"

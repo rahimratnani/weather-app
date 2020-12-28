@@ -2,24 +2,27 @@
   display: flex;
   justify-content: center;
   max-width: 80%;
-  margin: 1rem auto 1rem auto;
+  margin: auto auto 1rem auto;
   align-items: center;
-  /* border: 1px solid black; */
 
   background: linear-gradient(
     180deg,
     hsla(207, 97%, 66%, 0.8) 0%,
     hsla(212, 97%, 62%, 1) 87%
   );
-  border-radius: 20px;
-  padding: 0 0.3rem 0 0.3rem;
+  border-radius: 15px;
 }
 
 .Location p {
-  font-size: 2rem;
+  font-size: 1.7rem;
   color: #fff;
-  /* color: #5aa2ea; */
   font-weight: 500;
   user-select: none;
   margin: 0 1rem 0 0;
+}
+
+.Location .flag {
+  height: 3rem;
+  width: 3rem;
+  margin: 0;
 }

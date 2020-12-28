@@ -1,8 +1,7 @@
 .Switch {
   user-select: none;
   -webkit-tap-highlight-color: transparent;
-  /* My styles */
-  margin: auto;
+  margin: 1rem auto 1rem auto;
   max-width: 6.5rem;
   height: 3rem;
   display: flex;
@@ -13,39 +12,6 @@
   outline: none;
 }
 
-.toggle-button-cover {
-  /* display: table-cell;
-  position: relative; */
-  /* top: 0;
-  left: 50%; */
-  /* width: 100px;
-  height: 75px; */
-  /* width: 200px;
-  height: 140px; */
-  /* box-sizing: border-box; */
-}
-
-.button-cover {
-  /* height: 100px; */
-  /* margin: 20px; */
-  /* background-color: #fff; */
-  /* box-shadow: 0 10px 20px -8px #c5d6d6; */
-  /* border-radius: 10px; */
-}
-
-/* .button-cover:before {
-  counter-increment: button-counter;
-  content: counter(button-counter);
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  color: #d7e3e3;
-  font-size: 12px;
-  line-height: 1;
-  padding: 5px;
-} */
-
-/* .button-cover, */
 .knobs,
 .layer {
   position: absolute;
@@ -87,15 +53,12 @@
 .layer {
   width: 100%;
   background-color: #c3e6f5;
-  /* background-color: #ebf7fc; */
   transition: 0.3s ease all;
   z-index: 1;
 }
 
-/* Button 1 */
 #button-1 .knobs:before {
   content: "C";
-  /* content: "YES"; */
   position: absolute;
   top: 4px;
   left: 4px;
@@ -114,14 +77,12 @@
 
 #button-1 .checkbox:checked + .knobs:before {
   content: "F";
-  /* content: "NO"; */
   left: 42px;
   background-color: #f44336;
 }
 
 #button-1 .checkbox:checked ~ .layer {
   background-color: #fcd2d2;
-  /* background-color: #fcebeb; */
 }
 
 #button-1 .knobs,

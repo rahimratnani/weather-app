@@ -8,18 +8,16 @@
   );
   border-radius: 20px;
   padding-bottom: 1rem;
+  user-select: none;
 }
 
 .Weather .weatherMain {
-  /* border: 1px solid black; */
   display: flex;
   justify-content: space-around;
   align-items: center;
-  /* padding: 0; */
 }
 
 .Weather .condition {
-  /* color: #5aa2ea; */
   color: #ffffff;
   font-weight: bold;
   font-size: 1.5rem;
@@ -66,11 +64,13 @@
 }
 
 .Weather .description p {
-  margin: 0;
+  margin: 0.5rem 0 0.5rem 0;
 }
 
-.Weather .description p:nth-child(1) {
-  margin-bottom: 0.7rem;
+.Weather .description div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .Weather .description .divider {
