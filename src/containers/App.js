@@ -93,7 +93,7 @@ export default function App() {
 
   // fetch by city
   const getWeatherByCity = async (city) => {
-    let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=2542c4373dc0e41843d76539625f930b`;
+    let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=2542c4373dc0e41843d76539625f930b`;
 
     const response = await fetch(url, { mode: "cors" }); // make request
 
@@ -108,7 +108,7 @@ export default function App() {
 
   // fetch by location
   const getWeatherByGeoLoc = async (latitude, longitude) => {
-    const url = `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=2542c4373dc0e41843d76539625f930b
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=2542c4373dc0e41843d76539625f930b
     `;
 
     const response = await fetch(url, { mode: "cors" }); // make request
