@@ -2,7 +2,7 @@
 
 A weather app that shows current weather for a city. It uses [OpenWeatherMap API](https://openweathermap.org/) to fetch current weather. It can show weather in two units (celsius and fahrenheit). It can also fetch weather based on your location if location service is enabled in your browser.  
 
-**See it live [here](example.com)**.
+**See it live [here](https://rahimratnani.github.io/weather-app/)**.
 
 **Technologies used:**
 - React hooks
