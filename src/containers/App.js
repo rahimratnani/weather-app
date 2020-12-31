@@ -124,10 +124,6 @@ export default function App() {
 
   // callded for success
   const geoLocSuccess = (position) => {
-    console.log(
-      `latitude is ${position.coords.latitude} and longitude is ${position.coords.longitude}`
-    );
-
     // set the error code to null
     setError({ code: null, text: "" });
 
@@ -173,7 +169,6 @@ export default function App() {
     e.preventDefault();
     // check if input value is empty, if it's then ask to input city name
     if (!validateSearch(input)) {
-      console.log(`Please enter a city.`);
       // set show weather to false
       setShowWeather(false);
       // set error text to 'Please enter a city name.' and code to null
@@ -200,7 +195,6 @@ export default function App() {
   };
 
   const handleUnitChange = (e) => {
-    console.log(`check box status: ${e.target.checked}`);
     setShowCelsius((prevState) => (prevState ? false : true));
   };
 

@@ -17,7 +17,6 @@ export default function Weather(props) {
   } = props.weather;
 
   const { showCelsius } = props;
-  console.log(showCelsius);
 
   return (
     <section className="Weather">
