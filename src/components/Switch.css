@@ -58,7 +58,7 @@
 }
 
 #button-1 .knobs:before {
-  content: "C";
+  content: 'C';
   position: absolute;
   top: 4px;
   left: 4px;
@@ -76,7 +76,7 @@
 }
 
 #button-1 .checkbox:checked + .knobs:before {
-  content: "F";
+  content: 'F';
   left: 42px;
   background-color: #f44336;
 }

@@ -1,7 +1,14 @@
-import React from "react";
-import "./SearchBar.css";
+import React from 'react';
+import './SearchBar.css';
 
-export default function SearchBar(props) {
+interface SearchBarProps {
+  handleInput: (e: any) => void;
+  handleSearch: (e: any) => void;
+  geoLoc: () => void;
+  inputVal: string;
+}
+
+export default function SearchBar(props: SearchBarProps) {
   const { handleInput, handleSearch, inputVal, geoLoc } = props;
   return (
     <section className="Search">

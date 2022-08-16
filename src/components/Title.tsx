@@ -1,6 +1,5 @@
-import React from "react";
-import logo from "./../img/logo.png";
-import "./Title.css";
+import logo from './../assets/logo.png';
+import './Title.css';
 
 export default function Title() {
   return (

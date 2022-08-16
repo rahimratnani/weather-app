@@ -1,7 +1,11 @@
-import React from "react";
-import "./Switch.css";
+import React from 'react';
+import './Switch.css';
 
-export default function Switch(props) {
+interface SwitchProps {
+  handleUnitChange: () => void;
+}
+
+export default function Switch(props: SwitchProps) {
   return (
     <section className="Switch">
       <div className="button r" id="button-1">

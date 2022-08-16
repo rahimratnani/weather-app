@@ -1,7 +1,13 @@
-import React from "react";
-import "./Weather.css";
+import React from 'react';
+import './Weather.css';
+import { WeatherState } from './../types';
 
-export default function Weather(props) {
+interface WeatherProps {
+  weather: WeatherState;
+  showCelsius: boolean;
+}
+
+export default function Weather(props: WeatherProps) {
   const {
     description,
     day,
@@ -39,14 +45,14 @@ export default function Weather(props) {
       <div className="temp">
         <p>
           {showCelsius ? tempC : tempF}&deg;
-          <span className="degree">{showCelsius ? "C" : "F"}</span>
+          <span className="degree">{showCelsius ? 'C' : 'F'}</span>
         </p>
       </div>
       {/* ================ */}
       <div className="description">
         <p>
           Feels Like {showCelsius ? feelsLikeC : feelsLikeF}&deg;
-          {showCelsius ? "C" : "F"}
+          {showCelsius ? 'C' : 'F'}
         </p>
         <div>
           <p>Clouds {clouds}&#37;</p>

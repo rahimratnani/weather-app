@@ -4,13 +4,13 @@
   max-width: 80%;
   margin: auto auto 1rem auto;
   align-items: center;
-
   background: linear-gradient(
     180deg,
     hsla(207, 97%, 66%, 0.8) 0%,
     hsla(212, 97%, 62%, 1) 87%
   );
   border-radius: 15px;
+  height: 50px;
 }
 
 .Location p {
