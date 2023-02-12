@@ -15,3 +15,27 @@
     box-shadow: none;
   }
 }
+
+@media only screen and (max-width: 1400px) {
+  .App {
+    height: 90vh;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .App {
+    height: 48vh;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .App {
+    height: 65vh;
+  }
+}
+
+@media only screen and (width: 540px) {
+  .App {
+    height: 77vh;
+  }
+}
