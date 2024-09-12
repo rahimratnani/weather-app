@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`title with logo should render title and logo 1`] = `
+<div>
+  <section
+    class="Title"
+  >
+    <div
+      class="logo"
+    >
+      <img
+        alt=""
+        src="logo.png"
+      />
+    </div>
+    <h1
+      class="heading"
+    >
+      Weather App
+    </h1>
+  </section>
+</div>
+`;
