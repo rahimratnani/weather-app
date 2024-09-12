@@ -75,10 +75,7 @@ function App() {
   // if true, show temp in celisius, fahrenheit otherwise
   const [showCelsius, setShowCelsius] = useState(true);
   // store error
-  const [error, setError] = useState<{ code: null | number; text: string }>({
-    code: null,
-    text: '',
-  });
+  const [error, setError] = useState('');
 
   interface Response {
     status: number;
@@ -88,8 +85,15 @@ function App() {
   const handleError = (response: Response) => {
     // set show weather to false first
     setShowWeather(false);
-    // setErrorCode(response.status);
-    setError({ code: response.status, text: '' });
+    let errorText = '';
+
+    if (response.status === 404) {
+      errorText = 'No Results Found';
+    } else {
+      errorText = 'Unknown Error Occurred';
+    }
+
+    setError(errorText);
     console.error(`Server responded with status text ${response.statusText}`);
   };
 
@@ -138,7 +142,7 @@ function App() {
   // callded for success
   const geoLocSuccess = (position: Position) => {
     // set the error code to null
-    setError({ code: null, text: '' });
+    setError('');
 
     getWeatherByGeoLoc(position.coords.latitude, position.coords.longitude)
       .then((data: WeatherState) => {
@@ -158,13 +162,13 @@ function App() {
   const geoLocError = () => {
     // set show weather to false
     setShowWeather(false);
-    setError({ code: null, text: 'Unable to retrieve your location.' });
+    setError('Unable to retrieve your location.');
   };
 
   // fetch by geolocation
   const getGeoLoc = () => {
     if ('geolocation' in navigator) {
-      setError({ code: null, text: '' });
+      setError('');
       navigator.geolocation.getCurrentPosition(geoLocSuccess, geoLocError);
     }
   };
@@ -185,12 +189,12 @@ function App() {
       // set show weather to false
       setShowWeather(false);
       // set error text to 'Please enter a city name.' and code to null
-      setError({ code: null, text: 'Please Enter A City Name' });
+      setError('Please Enter A City Name');
       return;
     }
 
     // set the error code to null
-    setError({ code: null, text: '' });
+    setError('');
 
     // make the fetch request
     getWeatherByCity(input)
@@ -218,13 +222,11 @@ function App() {
         manageState(data);
         setShowWeather(true);
       })
-      // catch the thrown response and execute error handling function
+      // catch the thrown response and call error handling function
       .catch((response) => {
         handleError(response);
       });
   }, []);
-
-  // ========== 888888888888888888 ================= //
 
   return (
     <div className="App">
@@ -245,7 +247,7 @@ function App() {
         />
       ) : null}
 
-      {error.code || error.text ? <Error error={error} /> : null}
+      <Error errorMessage={error} />
     </div>
   );
 }
